@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volleyball Skills Hub | The Sunday Drill</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts (Inter) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #2b2d42;
+            background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        main {
+            flex: 1;
+        }
+        .bg-navy {
+            background-color: #0f172a;
+        }
+        .bg-volleyball {
+            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+        }
+        .text-volleyball {
+            color: #0284c7;
+        }
+        .hero-section {
+            background: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.85)), 
+                        url('https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?q=80&w=1600&auto=format&fit=crop') center/cover no-repeat;
+            color: white;
+            padding: 80px 0;
+            border-bottom: 4px solid #0284c7;
+        }
+        .card {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border: none;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.1) !important;
+        }
+        .nav-link.active {
+            font-weight: 700;
+            color: #0284c7 !important;
+        }
+        .page-view {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        .page-view.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .badge-skill {
+            background-color: #e0f2fe;
+            color: #0369a1;
+            font-weight: 600;
+        }
+        .footer-link {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .footer-link:hover {
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SINGLE NAVIGATION BAR (2-TIER SUBMENU) -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-navy sticky-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2 fw-bold" href="#home" onclick="navigateTo('home')">
+                <i class="fa-solid fa-volleyball text-info fs-4"></i>
+                <span>Volleyball Skills Hub</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarMain">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 fw-semibold">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="nav-home" href="#home" onclick="navigateTo('home')">Home</a>
+                    </li>
+                    
+                    <!-- 2-TIER DROPDOWN NAVIGATION -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="skillsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Skills Guides
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark shadow" aria-labelledby="skillsDropdown">
+                            <li><a class="dropdown-item" href="#passing" onclick="navigateTo('passing')"><i class="fa-solid fa-shield-halved me-2 text-info"></i>Passing & Defense</a></li>
+                            <li><a class="dropdown-item" href="#serving" onclick="navigateTo('serving')"><i class="fa-solid fa-hand-sparkles me-2 text-info"></i>Serving & Setting</a></li>
+                            <li><a class="dropdown-item" href="#hitting" onclick="navigateTo('hitting')"><i class="fa-solid fa-bolt me-2 text-info"></i>Hitting Mechanics</a></li>
+                            <li><a class="dropdown-item" href="#court-iq" onclick="navigateTo('court-iq')"><i class="fa-solid fa-brain me-2 text-info"></i>Court IQ & Rules</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" id="nav-newsletter" href="#newsletter" onclick="navigateTo('newsletter')">The Sunday Drill</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="nav-contact" href="#contact" onclick="navigateTo('contact')">Contact Us</a>
+                    </li>
+                </ul>
+                <a href="#newsletter" onclick="navigateTo('newsletter')" class="btn btn-info text-white ms-lg-3 btn-sm rounded-pill px-3">
+                    <i class="fa-solid fa-envelope me-1"></i> Subscribe
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ALERT MESSAGE CONTAINER FOR ACTIONS -->
+    <div class="container mt-3" id="alertContainer"></div>
+
+    <main>
+        <!-- ================= PAGE 1: HOME PAGE ================= -->
+        <div id="page-home" class="page-view active">
+            <!-- Hero Banner -->
+            <section class="hero-section text-center">
+                <div class="container">
+                    <span class="badge bg-info text-dark rounded-pill px-3 py-2 mb-3 text-uppercase fw-bold">Free Training Guides</span>
+                    <h1 class="display-4 fw-extrabold mb-3">Master the Fundamentals. Play with Confidence.</h1>
+                    <p class="lead text-light max-w-2xl mx-auto mb-4">
+                        Tired of 15-second highlight reels that don't teach you real mechanics? Step-by-step volleyball guides built specifically for high school, club, and recreational players.
+                    </p>
+                    <div class="d-flex justify-content-center gap-3">
+                        <a href="#passing" onclick="navigateTo('passing')" class="btn btn-info btn-lg text-white rounded-pill px-4 shadow">
+                            <i class="fa-solid fa-book-open me-2"></i>Explore Guides
+                        </a>
+                        <a href="#newsletter" onclick="navigateTo('newsletter')" class="btn btn-outline-light btn-lg rounded-pill px-4">
+                            Join Sunday Newsletter
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- BOOTSTRAP 2x2 CARD GRID (Skill Guides) -->
+            <section class="py-5">
+                <div class="container">
+                    <div class="text-center mb-5">
+                        <h2 class="fw-bold">Core Skill Breakdown Guides</h2>
+                        <p class="text-muted">Select a skill below to master foundational techniques and fix common mistakes.</p>
+                    </div>
+
+                    <div class="row g-4">
+                        <!-- Card 1: Passing & Defense -->
+                        <div class="col-md-6">
+                            <div class="card h-100 shadow-sm card-hover rounded-4 overflow-hidden">
+                                <div class="card-body p-4 d-flex flex-column">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="bg-primary bg-opacity-10 text-primary p-3 rounded-3 me-3">
+                                            <i class="fa-solid fa-shield-halved fs-3"></i>
+                                        </div>
+                                        <div>
+                                            <span class="badge badge-skill mb-1">Defense</span>
+                                            <h3 class="h5 card-title fw-bold mb-0">Passing & Defense</h3>
+                                        </div>
+                                    </div>
+                                    <p class="card-text text-secondary flex-grow-1">
+                                        Lock down your forearm platform, execute clean footwork patterns, and learn to read an attacker's shoulder to keep every rally alive.
+                                    </p>
+                                    <button onclick="navigateTo('passing')" class="btn btn-outline-primary rounded-pill w-100 mt-3 fw-semibold">
+                                        Read Passing Guide <i class="fa-solid fa-arrow-right ms-1"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 2: Serving & Setting -->
+                        <div class="col-md-6">
+                            <div class="card h-100 shadow-sm card-hover rounded-4 overflow-hidden">
+                                <div class="card-body p-4 d-flex flex-column">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="bg-info bg-opacity-10 text-info p-3 rounded-3 me-3">
+                                            <i class="fa-solid fa-hand-sparkles fs-3"></i>
+                                        </div>
+                                        <div>
+                                            <span class="badge badge-skill mb-1">Control</span>
+                                            <h3 class="h5 card-title fw-bold mb-0">Serving & Setting</h3>
+                                        </div>
+                                    </div>
+                                    <p class="card-text text-secondary flex-grow-1">
+                                        Master standing float serve tosses, strike with consistent flat contact, and build soft hand placement to avoid double contacts and lifts.
+                                    </p>
+                                    <button onclick="navigateTo('serving')" class="btn btn-outline-info rounded-pill w-100 mt-3 fw-semibold">
+                                        Read Serving Guide <i class="fa-solid fa-arrow-right ms-1"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 3: Hitting Mechanics -->
+                        <div class="col-md-6">
+                            <div class="card h-100 shadow-sm card-hover rounded-4 overflow-hidden">
+                                <div class="card-body p-4 d-flex flex-column">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="bg-warning bg-opacity-10 text-warning p-3 rounded-3 me-3">
+                                            <i class="fa-solid fa-bolt fs-3"></i>
+                                        </div>
+                                        <div>
+                                            <span class="badge badge-skill mb-1">Offense</span>
+                                            <h3 class="h5 card-title fw-bold mb-0">Hitting Mechanics</h3>
+                                        </div>
+                                    </div>
+                                    <p class="card-text text-secondary flex-grow-1">
+                                        Perfect your 3-step footwork approach timing, execute a high wrist-snap arm swing, and protect shoulder health while staying out of the net.
+                                    </p>
+                                    <button onclick="navigateTo('hitting')" class="btn btn-outline-warning text-dark rounded-pill w-100 mt-3 fw-semibold">
+                                        Read Hitting Guide <i class="fa-solid fa-arrow-right ms-1"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 4: Court IQ & Rules -->
+                        <div class="col-md-6">
+                            <div class="card h-100 shadow-sm card-hover rounded-4 overflow-hidden">
+                                <div class="card-body p-4 d-flex flex-column">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="bg-success bg-opacity-10 text-success p-3 rounded-3 me-3">
+                                            <i class="fa-solid fa-brain fs-3"></i>
+                                        </div>
+                                        <div>
+                                            <span class="badge badge-skill mb-1">Tactics</span>
+                                            <h3 class="h5 card-title fw-bold mb-0">Court IQ & Rules</h3>
+                                        </div>
+                                    </div>
+                                    <p class="card-text text-secondary flex-grow-1">
+                                        Understand indoor rotation overlaps, master essential loud communication callouts, and eliminate simple point-losing play errors.
+                                    </p>
+                                    <button onclick="navigateTo('court-iq')" class="btn btn-outline-success rounded-pill w-100 mt-3 fw-semibold">
+                                        Read Rules Guide <i class="fa-solid fa-arrow-right ms-1"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- INLINE NEWSLETTER CTA -->
+            <section class="bg-volleyball text-white py-5">
+                <div class="container text-center max-w-xl">
+                    <i class="fa-solid fa-envelope-open-text fs-1 mb-3"></i>
+                    <h2 class="fw-bold">Join The Sunday Drill Newsletter</h2>
+                    <p class="mb-4">Stop making simple mistakes on game day. Get a free, actionable 5-minute drill checklist delivered directly to your inbox every Sunday morning.</p>
+                    <form onsubmit="handleQuickNewsletter(event)" class="row g-2 justify-content-center max-w-lg mx-auto">
+                        <div class="col-sm-8">
+                            <input type="email" id="homeNewsletterEmail" class="form-control form-control-lg rounded-pill" placeholder="Enter your email address" required>
+                        </div>
+                        <div class="col-sm-4">
+                            <button type="submit" class="btn btn-dark btn-lg rounded-pill w-100 fw-bold">Subscribe</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </div>
+
+        <!-- ================= PAGE 2: PASSING & DEFENSE ================= -->
+        <div id="page-passing" class="page-view">
+            <div class="bg-navy text-white py-4 mb-4">
+                <div class="container">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb mb-1 text-muted small">
+                            <li class="breadcrumb-item"><a href="#home" onclick="navigateTo('home')" class="text-info text-decoration-none">Home</a></li>
+                            <li class="breadcrumb-item"><a href="#" class="text-info text-decoration-none">Skills Guides</a></li>
+                            <li class="breadcrumb-item active text-white" aria-current="page">Passing & Defense</li>
+                        </ol>
+                    </nav>
+                    <h1 class="fw-bold"><i class="fa-solid fa-shield-halved text-info me-2"></i>Passing & Defense Breakdown</h1>
+                    <p class="lead text-light mb-0">Learn to build a solid forearm platform, move efficiently, and read opponents.</p>
+                </div>
+            </div>
+
+            <div class="container py-3">
+                <div class="row g-4">
+                    <div class="col-lg-8">
+                        <!-- Module 1 -->
+                        <div class="card shadow-sm rounded-4 mb-4">
+                            <div class="card-body p-4">
+                                <h3 class="fw-bold text-volleyball h4 mb-3"><i class="fa-solid fa-1 me-2"></i>Platform Setup & Mechanics</h3>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item px-0 py-3">
+                                        <strong class="d-block mb-1 text-dark"><i class="fa-solid fa-check text-success me-2"></i>Locked Elbows:</strong>
+                                        Extend both arms straight out, clasping one hand inside the other with thumbs aligned side-by-side. Never cross your thumbs.
+                                    </li>
+                                    <li class="list-group-item px-0 py-3">
+                                        <strong class="d-block mb-1 text-dark"><i class="fa-solid fa-check text-success me-2"></i>Angle Over Swing:</strong>
+                                        Do not swing your arms at the ball. Angle your platform toward the center of the court where your setter is positioned.
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Module 2 -->
+                        <div class="card shadow-sm rounded-4 mb-4">
+                            <div class="card-body p-4">
+                                <h3 class="fw-bold text-volleyball h4 mb-3"><i class="fa-solid fa-2 me-2"></i>Footwork & Positioning</h3>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item px-0 py-3">
+                                        <strong class="d-block mb-1 text-dark"><i class="fa-solid fa-check text-success me-2"></i>Base Stance:</strong>
+                                        Feet slightly wider than shoulder-width, knees bent, weight on the balls of your feet, and hips facing the incoming ball.
+                                    </li>
+                                    <li class="list-group-item px-0 py-3">
+                                        <strong class="d-block mb-1 text-dark"><i class="fa-solid fa-check text-success me-2"></i>Shuffle Step:</strong>
+                                        Move laterally using quick shuffle steps rather than crossing your feet to maintain balance and readiness.
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Module 3 -->
+                        <div class="card shadow-sm rounded-4 mb-4">
+                            <div class="card-body p-4">
+                                <h3 class="fw-bold text-volleyball h4 mb-3"><i class="fa-solid fa-3 me-2"></i>Reading the Hitter</h3>
+                                <p class="text-secondary">Keep your eyes on the opponent's hitting shoulder. If the shoulder drops or slows down, prepare for a tip or short free ball. Adjust your platform body angle before contact to push the ball up into the target zone.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sidebar CTA -->
+                    <div class="col-lg-4">
+                        <div class="card bg-navy text-white rounded-4 p-4 sticky-top" style="top: 90px;">
+                            <h4 class="fw-bold text-info"><i class="fa-solid fa-calendar-week me-2"></i>Weekly Passing Drill</h4>
+                            <p class="small text-light">Get our 5-minute Wall Passing Challenge checklist delivered this Sunday.</p>
+                            <button onclick="navigateTo('newsletter')" class="btn btn-info text-white rounded-pill w-100 fw-bold">Get Sunday Checklist</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= PAGE 3: SERVING & SETTING ================= -->
+        <div id="page-serving" class="page-view">
+            <div class="bg-navy text-white py-4 mb-4">
+                <div class="container">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb mb-1 text-muted small">
+                            <li class="breadcrumb-item"><a href="#home" onclick="navigateTo('home')" class="text-info text-decoration-none">Home</a></li>
+                            <li class="breadcrumb-item"><a href="#" class="text-info text-decoration-none">Skills Guides</a></li>
+                            <li class="breadcrumb-item active text-white" aria-current="page">Serving & Setting</li>
+                        </ol>
+                    </nav>
+                    <h1 class="fw-bold"><i class="fa-solid fa-hand-sparkles text-info me-2"></i>Serving & Setting Technique</h1>
+                    <p class="lead text-light mb-0">Master consistent float serves and soft setting hands.</p>
+                </div>
+            </div>
+
+            <div class="container py-3">
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="card h-100 shadow-sm rounded-4 p-4">
+                            <h3 class="fw-bold text-volleyball h4 mb-3"><i class="fa-solid fa-bullseye me-2"></i>Standing Float Serve</h3>
+                            <ol class="ps-3 text-secondary">
+                                <li class="mb-3"><strong>The Stance:</strong> Step forward with your non-dominant foot, keeping your chest open toward your target zone.</li>
+                                <li class="mb-3"><strong>The Toss:</strong> Lift the ball 1-2 feet above your head in a controlled, non-spinning motion with your non-dominant hand.</li>
+                                <li class="mb-3"><strong>The Contact:</strong> Strike the center of the ball flat with the palm of your hand, stopping right after contact to kill spin and create unpredictable float.</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="card h-100 shadow-sm rounded-4 p-4">
+                            <h3 class="fw-bold text-volleyball h4 mb-3"><i class="fa-solid fa-hands-holding-circle me-2"></i>Setting Hand Touch</h3>
+                            <ol class="ps-3 text-secondary">
+                                <li class="mb-3"><strong>Forming the Window:</strong> Shape your hands into a soft triangle or basket shape right above your forehead, spreading fingers wide.</li>
+                                <li class="mb-3"><strong>Contact & Extension:</strong> Catch and release the ball in one fluid motion, using both wrist cushion and leg extension.</li>
+                                <li class="mb-3"><strong>Avoiding Violations:</strong> Never let the ball rest in your palms or drag below your eye line to prevent double-contact and lift calls.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= PAGE 4: HITTING MECHANICS ================= -->
+        <div id="page-hitting" class="page-view">
+            <div class="bg-navy text-white py-4 mb-4">
+                <div class="container">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb mb-1 text-muted small">
+                            <li class="breadcrumb-item"><a href="#home" onclick="navigateTo('home')" class="text-info text-decoration-none">Home</a></li>
+                            <li class="breadcrumb-item"><a href="#" class="text-info text-decoration-none">Skills Guides</a></li>
+                            <li class="breadcrumb-item active text-white" aria-current="page">Hitting Mechanics</li>
+                        </ol>
+                    </nav>
+                    <h1 class="fw-bold"><i class="fa-solid fa-bolt text-info me-2"></i>Hitting Mechanics & Approach</h1>
+                    <p class="lead text-light mb-0">Build explosive jump height, arm swing speed, and safe landing habits.</p>
+                </div>
+            </div>
+
+            <div class="container py-3">
+                <div class="card shadow-sm rounded-4 p-4 mb-4">
+                    <h3 class="fw-bold text-volleyball h4 mb-3">Standard 3-Step Approach (Right-Handed)</h3>
+                    <div class="row text-center g-3 my-2">
+                        <div class="col-md-4">
+                            <div class="bg-light p-3 rounded-3 border">
+                                <span class="badge bg-primary mb-2">Step 1 (Left)</span>
+                                <p class="mb-0 small text-muted">Directional step to trace the setter's ball trajectory.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="bg-light p-3 rounded-3 border">
+                                <span class="badge bg-primary mb-2">Step 2 (Right)</span>
+                                <p class="mb-0 small text-muted">Long, fast plant step converting speed into vertical power.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="bg-light p-3 rounded-3 border">
+                                <span class="badge bg-primary mb-2">Step 3 (Left)</span>
+                                <p class="mb-0 small text-muted">Closing step bringing feet parallel to explode upward into the jump.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm rounded-4 p-4">
+                    <h3 class="fw-bold text-volleyball h4 mb-3">Arm Swing & Shoulder Safety</h3>
+                    <p class="text-secondary">Pull your hitting elbow high and back behind your ear while pointing your non-dominant hand at the ball ("Bow and Arrow" stance). Reach for maximum height, strike the ball at full arm extension, and snap your wrist downward to generate topspin. Always warm up your rotator cuffs prior to attacking drills!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= PAGE 5: COURT IQ & RULES ================= -->
+        <div id="page-court-iq" class="page-view">
+            <div class="bg-navy text-white py-4 mb-4">
+                <div class="container">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb mb-1 text-muted small">
+                            <li class="breadcrumb-item"><a href="#home" onclick="navigateTo('home')" class="text-info text-decoration-none">Home</a></li>
+                            <li class="breadcrumb-item"><a href="#" class="text-info text-decoration-none">Skills Guides</a></li>
+                            <li class="breadcrumb-item active text-white" aria-current="page">Court IQ & Rules</li>
+                        </ol>
+                    </nav>
+                    <h1 class="fw-bold"><i class="fa-solid fa-brain text-info me-2"></i>Court IQ, Rotations & Rules</h1>
+                    <p class="lead text-light mb-0">Eliminate rotation overlap penalties and communicate clearly during rallies.</p>
+                </div>
+            </div>
+
+            <div class="container py-3">
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="card h-100 shadow-sm rounded-4 p-4">
+                            <h3 class="fw-bold text-volleyball h4 mb-3"><i class="fa-solid fa-rotate me-2"></i>Indoor Rotations & Overlaps</h3>
+                            <p class="text-secondary">Teams rotate clockwise whenever winning back the right to serve (a side-out). Before the server contacts the ball, each player must remain strictly behind or beside their positional court teammates to avoid illegal overlap penalties.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card h-100 shadow-sm rounded-4 p-4">
+                            <h3 class="fw-bold text-volleyball h4 mb-3"><i class="fa-solid fa-bullhorn me-2"></i>Essential Court Callouts</h3>
+                            <ul class="list-unstyled">
+                                <li class="mb-2"><strong class="text-dark">"MINE!":</strong> Call early and loudly to prevent collisions between defensive passers.</li>
+                                <li class="mb-2"><strong class="text-dark">"FREE BALL!":</strong> Shouted when an opponent sends an easy ball over, allowing your team to set an offense.</li>
+                                <li class="mb-2"><strong class="text-dark">"OUT!":</strong> Warns teammates not to touch a ball traveling past boundaries.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= PAGE 6: SUBSCRIPTION / NEWSLETTER ================= -->
+        <div id="page-newsletter" class="page-view">
+            <div class="bg-navy text-white py-4 mb-4">
+                <div class="container text-center">
+                    <h1 class="fw-bold"><i class="fa-solid fa-envelope-open-text text-info me-2"></i>Subscribe to The Sunday Drill</h1>
+                    <p class="lead text-light mb-0">Level up your game 5 minutes at a time with weekly actionable checklists.</p>
+                </div>
+            </div>
+
+            <div class="container py-3 max-w-lg">
+                <div class="card shadow-sm rounded-4 p-4">
+                    <h3 class="fw-bold mb-3">Join Free Today</h3>
+                    <p class="text-muted small mb-4">Built for high school athletes, club players, and recreational league competitors who want to improve fast.</p>
+
+                    <form onsubmit="handleFullNewsletter(event)">
+                        <div class="mb-3">
+                            <label for="newsName" class="form-label fw-semibold">First Name</label>
+                            <input type="text" class="form-control" id="newsName" placeholder="Enter your first name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="newsEmail" class="form-label fw-semibold">Email Address</label>
+                            <input type="email" class="form-control" id="newsEmail" placeholder="Enter your email address" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="newsLevel" class="form-label fw-semibold">Current Skill Level</label>
+                            <select class="form-select" id newsLevel required>
+                                <option value="" selected disabled>Choose your skill level...</option>
+                                <option value="Beginner">Beginner (Learning Form)</option>
+                                <option value="Intermediate">Intermediate (High School / Club)</option>
+                                <option value="Rec League">Recreational League Adult</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-info text-white rounded-pill w-100 py-2 fw-bold">
+                            <i class="fa-solid fa-paper-plane me-2"></i>JOIN THE SUNDAY DRILL
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= PAGE 7: CONTACT US ================= -->
+        <div id="page-contact" class="page-view">
+            <div class="bg-navy text-white py-4 mb-4">
+                <div class="container text-center">
+                    <h1 class="fw-bold"><i class="fa-solid fa-comments text-info me-2"></i>Contact Us & Ask a Coach</h1>
+                    <p class="lead text-light mb-0">Have a question about a rule, rotation, or drill? Send us a message!</p>
+                </div>
+            </div>
+
+            <div class="container py-3 max-w-lg">
+                <div class="card shadow-sm rounded-4 p-4">
+                    <form onsubmit="handleContactSubmit(event)">
+                        <div class="mb-3">
+                            <label for="contactName" class="form-label fw-semibold">Your Name</label>
+                            <input type="text" class="form-control" id="contactName" placeholder="Enter your full name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="contactEmail" class="form-label fw-semibold">Your Email</label>
+                            <input type="email" class="form-control" id="contactEmail" placeholder="Enter your email address" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="contactSubject" class="form-label fw-semibold">Subject</label>
+                            <select class="form-select" id="contactSubject" required>
+                                <option value="" selected disabled>Select a subject...</option>
+                                <option value="Rule Question">Rule Question</option>
+                                <option value="Drill Suggestion">Drill Suggestion</option>
+                                <option value="General Feedback">General Feedback</option>
+                            </select>
+                        </div>
+                        <div class="mb-4">
+                            <label for="contactMessage" class="form-label fw-semibold">Message</label>
+                            <textarea class="form-control" id="contactMessage" rows="4" placeholder="Type your message or question here..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-info text-white rounded-pill w-100 py-2 fw-bold">
+                            <i class="fa-solid fa-paper-plane me-2"></i>SUBMIT MESSAGE
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER WITH COPYRIGHT, TERMS, AND PRIVACY -->
+    <footer class="bg-navy text-light py-4 mt-5 border-top border-secondary">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                    <span class="fw-semibold">&copy; 2026 Volleyball Skills Hub. All Rights Reserved.</span>
+                    <div class="small text-muted">Built for IS 117 Semester Project</div>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <a href="#home" onclick="showAlert('Terms of Service: This site is an educational project created for IS 117 at NJIT.', 'info')" class="footer-link me-3 small">Terms of Service</a>
+                    <a href="#home" onclick="showAlert('Privacy Policy: We do not store or sell your email address.', 'info')" class="footer-link small">Privacy Statement</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- ROUTING & INTERACTION LOGIC -->
+    <script>
+        // Page Navigation Router
+        function navigateTo(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page-view').forEach(page => {
+                page.classList.remove('active');
+            });
+
+            // Show target page
+            const targetPage = document.getElementById('page-' + pageId);
+            if (targetPage) {
+                targetPage.classList.add('active');
+            }
+
+            // Update Navbar active link highlight
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            const activeNav = document.getElementById('nav-' + pageId);
+            if (activeNav) {
+                activeNav.classList.add('active');
+            }
+
+            // Scroll smoothly to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Display Dynamic Bootstrap Alert Message
+        function showAlert(message, type = 'success') {
+            const alertContainer = document.getElementById('alertContainer');
+            alertContainer.innerHTML = `
+                <div class="alert alert-${type} alert-dismissible fade show shadow-sm rounded-3" role="alert">
+                    <i class="fa-solid ${type === 'success' ? 'fa-circle-check' : 'fa-circle-info'} me-2"></i>
+                    ${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            `;
+            // Auto dismiss after 5 seconds
+            setTimeout(() => {
+                const alertEl = alertContainer.querySelector('.alert');
+                if (alertEl) {
+                    const bsAlert = new bootstrap.Alert(alertEl);
+                    bsAlert.close();
+                }
+            }, 5000);
+        }
+
+        // Form Handlers
+        function handleQuickNewsletter(e) {
+            e.preventDefault();
+            const email = document.getElementById('homeNewsletterEmail').value;
+            showAlert(`Thank you for subscribing to The Sunday Drill with <strong>${email}</strong>! Check your inbox this Sunday morning.`);
+            e.target.reset();
+        }
+
+        function handleFullNewsletter(e) {
+            e.preventDefault();
+            const name = document.getElementById('newsName').value;
+            showAlert(`Welcome aboard, ${name}! Your subscription to <strong>The Sunday Drill</strong> is confirmed.`);
+            e.target.reset();
+        }
+
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('contactName').value;
+            showAlert(`Thank you, ${name}! Your message has been sent to our coaching team. We respond weekly.`);
+            e.target.reset();
+        }
+
+        // Handle URL hash navigation on initial load
+        window.addEventListener('DOMContentLoaded', () => {
+            const hash = window.location.hash.replace('#', '');
+            if (hash) {
+                navigateTo(hash);
+            }
+        });
+    </script>
+</body>
+</html>
